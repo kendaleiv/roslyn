@@ -49,12 +49,12 @@ pr:
 
 variables:
 - name: queueName
-  value: windows.vs2022preview.scout.amd64.open 
+  value: windows.vs2022preview.scout.amd64.open
 
 jobs:
 - job: VS_Integration_CoreHost_Debug
   pool:
-    name: NetCore-Public
+    name: NetCore-Svc-Public
     demands: ImageOverride -equals $(queueName)
   timeoutInMinutes: 150
   variables:
@@ -70,7 +70,7 @@ jobs:
 - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
   - job: VS_Integration_CoreHost_Release
     pool:
-      name: NetCore-Public
+      name: NetCore-Svc-Public
       demands: ImageOverride -equals $(queueName)
     timeoutInMinutes: 150
     variables:
