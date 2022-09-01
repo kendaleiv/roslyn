@@ -22,29 +22,27 @@ trigger:
 pr:
   branches:
     include:
-      - main
-      - main-vs-deps
-      - release/*
-      - features/*
-      - demos/*
-      exclude:
-      # Since the version of VS on the integration VM images are a moving target,
-      # we are unable to reliably run integration tests on servicing branches.
-      - release/dev17.0-vs-deps
-      - release/dev17.2
-      - release/dev17.3
+    - main
+    - main-vs-deps
+    - release/*
+    - features/*
+    - demos/*
+    exclude:
+    # Since the version of VS on the integration VM images are a moving target,
+    # we are unable to reliably run integration tests on servicing branches.
+    - release/dev17.0-vs-deps
+    - release/dev17.2
+    - release/dev17.3
 
 variables:
 - name: XUNIT_LOGS
   value: $(Build.SourcesDirectory)\artifacts\log\$(_configuration)
-- name: queueName
-  value: windows.vs2022preview.scout.amd64.open  
 
 jobs:
 - job: VS_Integration_LSP
   pool:
-    name: NetCore-Public
-    demands: ImageOverride -equals $(queueName)
+    name: NetCore-Svc-Public
+    demands: ImageOverride -equals windows.vs2022preview.scout.amd64.open
   timeoutInMinutes: 150
 
   steps:
